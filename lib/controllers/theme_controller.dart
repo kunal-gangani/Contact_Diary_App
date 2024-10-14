@@ -9,4 +9,13 @@ class ThemeController extends ChangeNotifier {
     _isDarkMode = !_isDarkMode;
     notifyListeners();
   }
+
+  void changeIcon() {
+    if (_isDarkMode) {
+      IconData icon = Icons.dark_mode;
+    } else {
+      IconData icon = Icons.light_mode;
+    }
+    notifyListeners();
+  }
 }

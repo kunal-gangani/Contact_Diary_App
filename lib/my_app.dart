@@ -1,6 +1,7 @@
 import 'package:contact_diary_app/controllers/theme_controller.dart';
 import 'package:contact_diary_app/models/counter_model.dart';
 import 'package:contact_diary_app/views/HomePage/home_page.dart';
+import 'package:contact_diary_app/views/YourContact/your_contact.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
                 designWidth: size.width,
                 designHeight: size.height,
                 app: MaterialApp(
-                  home: const HomePage(),
+                  home: YourContact(),
                   debugShowCheckedModeBanner: false,
                   theme: themeController.isDarkMode
                       ? ThemeData.dark()

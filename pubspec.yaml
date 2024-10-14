@@ -39,6 +39,9 @@ dependencies:
   shared_preferences: ^2.3.2
   flutter_screenutil: ^5.9.3
   flexify: ^2.1.1
+  image_picker: ^1.1.2
+  toastification: ^2.3.0
+  fluttertoast: ^8.2.8
 
 dev_dependencies:
   flutter_test:
