@@ -1,16 +1,28 @@
-# contact_diary_app
+# Flutter Contact Diary App
 
-A new Flutter project.
+## Overview
 
-## Getting Started
+The Flutter Contact Diary App is a simple and efficient contact management app. Users can add, save, call, delete, and hide their contacts within the app. The app leverages Shared Preferences for persistent storage and Provider for state management, ensuring a smooth user experience.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **Add New Contacts**: Easily add new contacts with essential details like name, contact number, and profile image.
+- **Call Contacts**: Call contacts directly from the app.
+- **Hide Contacts**: Hide specific contacts as per user preference.
+- **Delete Contacts**: Delete contacts as needed.
+- **Persistent Storage**: Save contacts locally using Shared Preferences.
+- **State Management**: Manage contact states with Provider for efficient app performance.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Technologies Used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter**
+- **Dart**
+- **Shared Preferences** for local storage
+- **Provider** for state management
+- **image_picker** for selecting profile images
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/contact_diary_app.git
