@@ -1,21 +1,44 @@
+import 'package:contact_diary_app/models/contacts_model.dart';
 import 'package:flutter/material.dart';
 
 class ThemeController extends ChangeNotifier {
-  bool _isDarkMode = false;
+  bool isTheme = false;
+  late AnimationController _iconAnimationController;
 
-  bool get isDarkMode => _isDarkMode;
+  ThemeController(TickerProvider vsync) {
+    _iconAnimationController = AnimationController(
+      vsync: vsync,
+      duration: const Duration(
+        milliseconds: 300,
+      ),
+    );
+
+    if (isTheme) {
+      _iconAnimationController.forward();
+    } else {
+      _iconAnimationController.reverse();
+    }
+  }
+
+  bool get isDarkMode => isTheme;
+
+  AnimationController get iconAnimationController => _iconAnimationController;
 
   void changeTheme() {
-    _isDarkMode = !_isDarkMode;
+    isTheme = !isTheme;
+
+    if (isTheme) {
+      _iconAnimationController.forward();
+    } else {
+      _iconAnimationController.reverse();
+    }
+
     notifyListeners();
   }
 
-  void changeIcon() {
-    if (_isDarkMode) {
-      IconData icon = Icons.dark_mode;
-    } else {
-      IconData icon = Icons.light_mode;
-    }
-    notifyListeners();
+  @override
+  void dispose() {
+    _iconAnimationController.dispose();
+    super.dispose();
   }
 }

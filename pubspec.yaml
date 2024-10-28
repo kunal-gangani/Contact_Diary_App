@@ -42,6 +42,10 @@ dependencies:
   image_picker: ^1.1.2
   toastification: ^2.3.0
   fluttertoast: ^8.2.8
+  curved_navigation_bar: ^1.0.6
+  url_launcher: ^6.3.1
+  #share_extend: ^2.0.0
+  flutter_slidable: ^3.1.1
 
 dev_dependencies:
   flutter_test:
