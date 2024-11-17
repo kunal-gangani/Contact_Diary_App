@@ -1,11 +1,11 @@
 import 'package:contact_diary_app/views/HomePage/home_page.dart';
+import 'package:contact_diary_app/controllers/contact_controller.dart';
 import 'package:flexify/flexify.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:contact_diary_app/controllers/theme_controller.dart';
 
 class YourContact extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -16,8 +16,6 @@ class YourContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = Provider.of<ThemeController>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -32,10 +30,8 @@ class YourContact extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Profile Image Picker
             GestureDetector(
               onTap: () async {
-                // Pick an image
                 final XFile? image = await _picker.pickImage(
                   source: ImageSource.gallery,
                 );
@@ -63,7 +59,6 @@ class YourContact extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            // Name Input
             TextFormField(
               textInputAction: TextInputAction.next,
               controller: nameController,
@@ -88,7 +83,6 @@ class YourContact extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            // Submit Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
@@ -96,6 +90,7 @@ class YourContact extends StatelessWidget {
               onPressed: () {
                 final String name = nameController.text;
                 final String contact = contactController.text;
+
                 if (name.isEmpty || contact.isEmpty) {
                   Fluttertoast.showToast(
                     msg: "Please enter all details",
@@ -106,6 +101,9 @@ class YourContact extends StatelessWidget {
                     fontSize: 16.0,
                   );
                 } else {
+                  Provider.of<ContactController>(context, listen: false)
+                      .updateUserDetails(name: name, phone: contact);
+
                   Fluttertoast.showToast(
                     msg: "Name: $name, Contact: $contact",
                     toastLength: Toast.LENGTH_SHORT,
@@ -116,7 +114,7 @@ class YourContact extends StatelessWidget {
                   );
 
                   Flexify.goRemove(
-                    const HomePage(),
+                    HomePage(),
                     animation: FlexifyRouteAnimations.blur,
                     duration: Durations.medium1,
                   );
@@ -124,9 +122,7 @@ class YourContact extends StatelessWidget {
               },
               child: const Text(
                 "Submit",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],

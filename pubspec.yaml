@@ -44,8 +44,10 @@ dependencies:
   fluttertoast: ^8.2.8
   curved_navigation_bar: ^1.0.6
   url_launcher: ^6.3.1
-  #share_extend: ^2.0.0
+  # share_extend: any
+  share_plus: ^10.1.1
   flutter_slidable: ^3.1.1
+  local_auth: ^2.3.0
 
 dev_dependencies:
   flutter_test:

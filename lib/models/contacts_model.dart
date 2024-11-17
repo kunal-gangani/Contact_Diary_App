@@ -19,11 +19,15 @@ class ContactsModel {
   List<String> hiddenPhoneList;
   List<String> hiddenEmailList;
 
+  // User Data
+  String userName;
+  String userPhone;
+
   ContactsModel({
     required this.phoneList,
     required this.nameList,
     required this.emailList,
-    required this.isTheme,
+    this.isTheme = false,
     List<String>? favNameList,
     List<String>? favEmailList,
     List<String>? favPhoneList,
@@ -33,6 +37,8 @@ class ContactsModel {
     List<String>? hiddenNameList,
     List<String>? hiddenPhoneList,
     List<String>? hiddenEmailList,
+    String? userName,
+    String? userPhone,
   })  : favNameList = favNameList ?? [],
         favEmailList = favEmailList ?? [],
         favPhoneList = favPhoneList ?? [],
@@ -41,5 +47,7 @@ class ContactsModel {
         deletedEmailList = deletedEmailList ?? [],
         hiddenNameList = hiddenNameList ?? [],
         hiddenPhoneList = hiddenPhoneList ?? [],
-        hiddenEmailList = hiddenEmailList ?? [];
+        hiddenEmailList = hiddenEmailList ?? [],
+        userName = userName ?? "John Doe",
+        userPhone = userPhone ?? "1234567890";
 }

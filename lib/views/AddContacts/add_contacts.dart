@@ -20,7 +20,7 @@ class AddContacts extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Flexify.goRemove(
-              const HomePage(),
+              HomePage(),
               animation: FlexifyRouteAnimations.blur,
               duration: Durations.medium1,
             );

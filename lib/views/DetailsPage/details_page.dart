@@ -1,10 +1,12 @@
 import 'package:contact_diary_app/controllers/bottom_navaigation_bar_controller.dart';
 import 'package:contact_diary_app/controllers/contact_controller.dart';
-import 'package:contact_diary_app/controllers/theme_controller.dart';
+import 'package:contact_diary_app/views/EditContacts/edit_contacts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:contact_diary_app/views/HomePage/home_page.dart';
 import 'package:flexify/flexify.dart';
 import 'package:provider/provider.dart';
+// import 'package:share_extend/share_extend.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +31,7 @@ class DetailPage extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Flexify.goRemove(
-              const HomePage(),
+              HomePage(),
             );
           },
           icon: const Icon(
@@ -69,7 +71,9 @@ class DetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 25.h),
+            SizedBox(
+              height: 25.h,
+            ),
             Container(
               width: 130.w,
               height: 130.h,
@@ -104,7 +108,9 @@ class DetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(
+              height: 20.h,
+            ),
             Text(
               name,
               style: TextStyle(
@@ -112,7 +118,9 @@ class DetailPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.h),
+            SizedBox(
+              height: 8.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -123,7 +131,9 @@ class DetailPage extends StatelessWidget {
                     color: Colors.grey[600],
                   ),
                 ),
-                SizedBox(width: 15.w),
+                SizedBox(
+                  width: 15.w,
+                ),
                 Text(
                   phone,
                   style: TextStyle(
@@ -133,7 +143,9 @@ class DetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10.h),
+            SizedBox(
+              height: 10.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -144,7 +156,9 @@ class DetailPage extends StatelessWidget {
                     color: Colors.grey[600],
                   ),
                 ),
-                SizedBox(width: 15.w),
+                SizedBox(
+                  width: 15.w,
+                ),
                 Text(
                   email,
                   style: TextStyle(
@@ -154,36 +168,46 @@ class DetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 40.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildActionButton(
-                  Icons.call,
-                  "Call",
-                  Colors.green,
-                  () async {
-                    Uri url = Uri.parse("tel:+91-$phone");
-                    await launchUrl(url);
-                  },
-                ),
-                _buildActionButton(
-                  Icons.message,
-                  "Message",
-                  Colors.blue,
-                  () async {
-                    Uri url = Uri.parse("sms:$phone");
-                    await launchUrl(url);
-                  },
-                ),
-                _buildActionButton(
-                  Icons.visibility_off,
-                  "Hide",
-                  Colors.grey,
-                  () {},
-                ),
-              ],
+            SizedBox(
+              height: 40.h,
             ),
+            Consumer<ContactController>(builder: (context, value, _) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildActionButton(
+                    Icons.call,
+                    "Call",
+                    Colors.green,
+                    () async {
+                      Uri url = Uri.parse("tel:+91-$phone");
+                      await launchUrl(url);
+                    },
+                  ),
+                  _buildActionButton(
+                    Icons.message,
+                    "Message",
+                    Colors.blue,
+                    () async {
+                      Uri url = Uri.parse("sms:$phone");
+                      await launchUrl(url);
+                    },
+                  ),
+                  _buildActionButton(
+                    Icons.visibility_off,
+                    "Hide",
+                    Colors.grey,
+                    () {
+                      value.hideContacts(
+                        name: name,
+                        phone: phone,
+                        email: email,
+                      );
+                    },
+                  ),
+                ],
+              );
+            }),
             SizedBox(
               height: 20.h,
             ),
@@ -195,7 +219,7 @@ class DetailPage extends StatelessWidget {
         selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.grey,
         currentIndex:
-            Provider.of<BottomNavaigationBarController>(context, listen: true)
+            Provider.of<BottomNavigationBarController>(context, listen: true)
                 .index,
         items: const [
           BottomNavigationBarItem(
@@ -211,8 +235,8 @@ class DetailPage extends StatelessWidget {
             label: 'Share',
           ),
         ],
-        onTap: (index) {
-          Provider.of<BottomNavaigationBarController>(context, listen: false)
+        onTap: (index) async {
+          Provider.of<BottomNavigationBarController>(context, listen: false)
               .getBottomBarIndex(index: index);
 
           if (index == 0) {
@@ -255,20 +279,26 @@ class DetailPage extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.grey[400],
                             foregroundColor:
-                                (Provider.of<ThemeController>(context).isTheme)
+                                (Provider.of<ContactController>(context)
+                                        .isTheme)
                                     ? Colors.white
                                     : Colors.black,
                           ),
-                          child: const Text("Cancel"),
+                          child: const Text(
+                            "Cancel",
+                          ),
                         ),
                         ElevatedButton(
                           onPressed: () {
                             Provider.of<ContactController>(context,
                                     listen: false)
                                 .deleteContact(
-                                    name: name, phone: phone, email: email)
+                              name: name,
+                              phone: phone,
+                              email: email,
+                            )
                                 .then((value) {
-                              Flexify.goRemoveAll(const HomePage(),
+                              Flexify.goRemoveAll(HomePage(),
                                   animation: FlexifyRouteAnimations.blur,
                                   duration: Durations.medium1);
                             });
@@ -288,7 +318,19 @@ class DetailPage extends StatelessWidget {
           } else if (index == 2) {
             String contactInfo =
                 "Contact Details:\nName: $name\nPhone: $phone\nEmail: $email";
-            // ShareExtend.share(contactInfo, "text");
+
+            // await ShareExtend.share(contactInfo, "text");
+            await Share.share(contactInfo);
+          } else if (index == 1) {
+            Flexify.goRemoveAll(
+              EditContacts(
+                name: name,
+                phone: phone,
+                email: email,
+              ),
+              animation: FlexifyRouteAnimations.blur,
+              duration: Durations.medium1,
+            );
           }
         },
       ),
